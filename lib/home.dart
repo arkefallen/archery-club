@@ -1,9 +1,11 @@
+import 'package:archery_club/detail_feeds.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
 import 'main.dart';
 import 'post.dart';
+import 'feeds.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -15,22 +17,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var _faker = new Faker();
 
-  List<String> imgItems = [
-    "https://picsum.photos/id/237/500/500",
-    "https://picsum.photos/id/238/500/500",
-    "https://picsum.photos/id/239/500/500"
-  ];
-
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,36 +33,57 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: 3,
         itemBuilder: (context, index) {
-          return Card(
-            color: Colors.white,
-            child: Column(
-              children: [
-                CarouselSlider(
-                  items: imgItems.map((img) {
-                    return Builder(builder: (BuildContext context) {
-                      return Image.network(img);
-                    });
-                  }).toList(),
-                  options: CarouselOptions(
-                      aspectRatio: 1 / 1, viewportFraction: 1, height: 400),
+          Feed feedsList = postFeeds[index];
+          return Padding(
+            padding: EdgeInsets.all(10.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return DetailFeedsScreen(feedsList: feedsList);
+                  },
+                ));
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                color: Colors.white,
+                child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        faker.internet.userName(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                    CarouselSlider(
+                      items: feedsList.photos.map((img) {
+                        return Builder(builder: (BuildContext builder) {
+                          return Image.network(img);
+                        });
+                      }).toList(),
+                      options: CarouselOptions(
+                        aspectRatio: 1 / 1,
+                        viewportFraction: 1,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(faker.lorem.sentence()),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              feedsList.username,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(feedsList.caption),
+                          )
+                        ],
+                      ),
                     )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
           );
         },
@@ -90,9 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return Post();
-          },))
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return Post();
+            },
+          ));
         },
       ),
     );
