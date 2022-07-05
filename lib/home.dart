@@ -1,9 +1,6 @@
 import 'package:archery_club/detail_feeds.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-
-import 'main.dart';
 import 'post.dart';
 import 'feeds.dart';
 
@@ -30,7 +27,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: ListView.builder(
+      body: 
+      //// TODO : read data from database
+      ListView.builder(
         itemCount: 3,
         itemBuilder: (context, index) {
           Feed feedsList = postFeeds[index];
