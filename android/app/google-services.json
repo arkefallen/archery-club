@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "725242731515",
+    "project_id": "archery-club-81494",
+    "storage_bucket": "archery-club-81494.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725242731515:android:9f31d3d1ae354b1166495e",
+        "android_client_info": {
+          "package_name": "com.artcak.archery_club"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725242731515-nor0ghtf44e5hpvicgrrlo0h5kb5kjqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwH43DjTJEcOq7JbAwiBmip4DEuWSR2R8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725242731515-nor0ghtf44e5hpvicgrrlo0h5kb5kjqi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
