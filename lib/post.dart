@@ -11,6 +11,7 @@ class Post extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference posts = firestore.collection('posts');
+    
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(

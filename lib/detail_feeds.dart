@@ -4,9 +4,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'constant/brand_colors.dart';
 
 class DetailFeedsScreen extends StatelessWidget {
-  const DetailFeedsScreen({required this.feedsList});
 
-  final Feed feedsList;
+  DetailFeedsScreen({
+    required this.caption,
+    required this.username,
+    required this.images
+  });
+
+  String caption;
+  String username;
+  String images;
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +27,7 @@ class DetailFeedsScreen extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: [
-                CarouselSlider(
-                  items: feedsList.photos.map((img) {
-                    return Builder(builder: (BuildContext builder) {
-                      return Image.network(img);
-                    });
-                  }).toList(),
-                  options: CarouselOptions(
-                    aspectRatio: 1 / 1,
-                    viewportFraction: 1,
-                  ),
-                ),
+                Image.network(images),
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -50,23 +47,20 @@ class DetailFeedsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    feedsList.username,
+                    username,
                     style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.normal,
-                      color: BrandColor.colorPrimaryLight
-                    ),
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.normal,
+                        color: BrandColor.colorPrimaryLight),
                   ),
                   SizedBox(height: 8.0),
                   Text(
-                    feedsList.caption,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: BrandColor.textColor
-                    ),
+                    caption,
+                    style:
+                        TextStyle(fontSize: 20.0, color: BrandColor.textColor),
                   )
                 ],
-              ), 
+              ),
             )
           ],
         ),
@@ -74,5 +68,3 @@ class DetailFeedsScreen extends StatelessWidget {
     );
   }
 }
-
-
