@@ -1,44 +1,28 @@
-import 'package:archery_club/constant/brand_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class EditFeeds extends StatelessWidget {
-  String caption;
-  String username;
-  String images;
-  String uID;
-
-  EditFeeds(
-      {required this.caption,
-      required this.username,
-      required this.images,
-      required this.uID});
-
+class CreateFeeds extends StatelessWidget {
+  TextEditingController captionController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController imagesController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference posts = firestore.collection('posts');
-
-    TextEditingController captionController =
-        TextEditingController(text: caption);
-    TextEditingController usernameController =
-        TextEditingController(text: username);
-    TextEditingController imagesController =
-        TextEditingController(text: images);
-
+    
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        title: const Text('Feeds Baru'),
         leading: BackButton(
-          color: Colors.white,
           onPressed: () {
             Navigator.pop(context);
           },
+          color: Colors.white,
         ),
-        title: Text(uID),
-        backgroundColor: BrandColor.colorPrimary,
       ),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
           child: SingleChildScrollView(
@@ -54,7 +38,7 @@ class EditFeeds extends StatelessWidget {
                   ),
                   maxLines: 3,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextField(
                   controller: usernameController,
                   decoration: InputDecoration(
@@ -64,7 +48,7 @@ class EditFeeds extends StatelessWidget {
                     hintText: "Masukkan nama kamu",
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextField(
                   controller: imagesController,
                   decoration: InputDecoration(
@@ -74,42 +58,40 @@ class EditFeeds extends StatelessWidget {
                     hintText: "Masukkan link gambar untuk ditampilkan",
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    //// TODO : update data to firestore
+                    onPressed: () {
+                      
+                      try {
+                        posts.add({
+                          'caption': captionController.text,
+                          'username': usernameController.text,
+                          'images': imagesController.text
+                        });
 
-                    try {
-                      posts.doc(uID).update({
-                        'caption': captionController.text,
-                        'username': usernameController.text,
-                        'images': imagesController.text
-                      });
+                        captionController.text = "";
+                        usernameController.text = "";
+                        imagesController.text = "";
 
-                      captionController.text = "";
-                      usernameController.text = "";
-                      imagesController.text = "";
-
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    } catch (e) {
-                      showDialog(
+                        Navigator.pop(context);
+                      } catch (e) {
+                        showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
-                                title: Text('Update Result'),
-                                content: Text("Proses gagal."),
+                                title: const Text('Insert Result'),
+                                content: const Text("Proses gagal."),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.pop(context, 'Kembali'),
-                                    child: Text('Kembali'),
+                                    child: const Text('Kembali'),
                                   )
                                 ],
-                              ));
-                    }
-                  },
-                  child: Text("UPDATE DATA"),
-                )
+                        ));
+                      }
+
+                    },
+                    child: const Text("TAMBAH DATA"))
               ],
             ),
           ),

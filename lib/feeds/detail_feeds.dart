@@ -1,8 +1,7 @@
-import 'package:archery_club/edit_feeds.dart';
+import 'package:archery_club/feeds/edit_feeds.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'feeds.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'constant/brand_colors.dart';
+import 'package:archery_club/constant/brand_colors.dart';
 
 class DetailFeedsScreen extends StatelessWidget {
   DetailFeedsScreen(
@@ -18,6 +17,9 @@ class DetailFeedsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference posts = firestore.collection('posts');
+
     return Scaffold(
       // appBar: AppBar(
       //   leading: BackButton(onPressed: () => Navigator.pop(context)),
@@ -34,7 +36,7 @@ class DetailFeedsScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       backgroundColor: BrandColor.colorPrimary,
-                      child: BackButton(
+                      child: const BackButton(
                         color: Colors.white,
                       ),
                     ),
@@ -43,7 +45,7 @@ class DetailFeedsScreen extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -54,7 +56,7 @@ class DetailFeedsScreen extends StatelessWidget {
                         fontWeight: FontWeight.normal,
                         color: BrandColor.colorPrimaryLight),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     caption,
                     style:
@@ -68,7 +70,8 @@ class DetailFeedsScreen extends StatelessWidget {
               children: [
                 OutlinedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
                       return EditFeeds(
                           caption: caption,
                           username: username,
@@ -77,7 +80,7 @@ class DetailFeedsScreen extends StatelessWidget {
                     }));
                   },
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(
                         Icons.edit,
                         size: 20,
@@ -92,9 +95,37 @@ class DetailFeedsScreen extends StatelessWidget {
                   ),
                 ),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Konfirmasi'),
+                            content: const Text("Anda yakin ingin menghapus data ?"),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("TIDAK")),
+                              TextButton(
+                                  onPressed: () {
+                                    try {
+                                      posts.doc(uID).delete();
+
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  },
+                                  child: const Text("YA"))
+                            ],
+                          );
+                        });
+                  },
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(
                         Icons.delete,
                         size: 20,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'home.dart';
 
 class Splash extends StatefulWidget {
@@ -17,7 +16,7 @@ class _SplashState extends State<Splash> {
   }
 
   _navigateToHome() async {
-    await Future.delayed(Duration(milliseconds: 1500), () {
+    await Future.delayed(const Duration(milliseconds: 1500), () {
       // Push replacement
 
       /*  
@@ -28,7 +27,7 @@ class _SplashState extends State<Splash> {
       Navigator.pushReplacement(
         context, 
         MaterialPageRoute(
-          builder: (context) => MyHomePage(title: 'ArcheryClub')
+          builder: (context) => const MyHomePage(title: 'ArcheryClub')
         )  
       );
     });
@@ -45,15 +44,6 @@ class _SplashState extends State<Splash> {
             height: 100,
             width: 100,
             color: Colors.blue,
-          ),
-          Container(
-            child: Text(
-              'This is splash screen',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ),
         ],
       ),

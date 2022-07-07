@@ -1,30 +1,44 @@
+import 'package:archery_club/constant/brand_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class CreateFeeds extends StatelessWidget {
-  TextEditingController captionController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController firstImgController = TextEditingController();
-  TextEditingController secondImgController = TextEditingController();
+class EditFeeds extends StatelessWidget {
+  String caption;
+  String username;
+  String images;
+  String uID;
+
+  EditFeeds(
+      {required this.caption,
+      required this.username,
+      required this.images,
+      required this.uID});
 
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference posts = firestore.collection('posts');
-    
+
+    TextEditingController captionController =
+        TextEditingController(text: caption);
+    TextEditingController usernameController =
+        TextEditingController(text: username);
+    TextEditingController imagesController =
+        TextEditingController(text: images);
+
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text('Feeds Baru'),
         leading: BackButton(
+          color: Colors.white,
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Colors.white,
         ),
+        title: Text(uID),
+        backgroundColor: BrandColor.colorPrimary,
       ),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
           child: SingleChildScrollView(
@@ -40,7 +54,7 @@ class CreateFeeds extends StatelessWidget {
                   ),
                   maxLines: 3,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextField(
                   controller: usernameController,
                   decoration: InputDecoration(
@@ -50,65 +64,50 @@ class CreateFeeds extends StatelessWidget {
                     hintText: "Masukkan nama kamu",
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextField(
-                  controller: firstImgController,
+                  controller: imagesController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)),
-                    labelText: "Link Gambar 1",
+                    labelText: "Link Gambar",
                     hintText: "Masukkan link gambar untuk ditampilkan",
                   ),
                 ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: secondImgController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    labelText: "Link Gambar 2",
-                    hintText: "Masukkan link gambar untuk ditampilkan",
-                  ),
-                ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
-                    onPressed: () {
-                      //// TODO : add data to firestore
+                  onPressed: () {
+                    try {
+                      posts.doc(uID).update({
+                        'caption': captionController.text,
+                        'username': usernameController.text,
+                        'images': imagesController.text
+                      });
 
-                      try {
-                        posts.add({
-                          'caption': captionController.text,
-                          'username': usernameController.text,
-                          'images': [
-                            firstImgController.text,
-                            secondImgController.text
-                          ]
-                        });
+                      captionController.text = "";
+                      usernameController.text = "";
+                      imagesController.text = "";
 
-                        captionController.text = "";
-                        usernameController.text = "";
-                        firstImgController.text = "";
-                        secondImgController.text = "";
-
-                        Navigator.pop(context);
-                      } catch (e) {
-                        showDialog(
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    } catch (e) {
+                      showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
-                                title: Text('Insert Result'),
-                                content: Text("Proses gagal."),
+                                title: const Text('Update Result'),
+                                content: const Text("Proses gagal."),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.pop(context, 'Kembali'),
-                                    child: Text('Kembali'),
+                                    child: const Text('Kembali'),
                                   )
                                 ],
-                        ));
-                      }
-
-                    },
-                    child: Text("TAMBAH DATA"))
+                              ));
+                    }
+                  },
+                  child: const Text("UPDATE DATA"),
+                )
               ],
             ),
           ),

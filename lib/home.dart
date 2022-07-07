@@ -1,8 +1,6 @@
-import 'package:archery_club/detail_feeds.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'feeds/detail_feeds.dart';
+import 'feeds/create_feeds.dart';
 import 'package:flutter/material.dart';
-import 'create_feeds.dart';
-import 'feeds.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -20,10 +18,19 @@ class _MyHomePageState extends State<MyHomePage> {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference posts = firestore.collection('posts');
 
-    Stream<QuerySnapshot> _postsStream =
-        firestore.collection('posts').snapshots();
-
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home" 
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Member",
+          )
+        ],
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
@@ -33,67 +40,68 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.white,
       ),
       body:
-          //// TODO : read data from database
-          Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _postsStream,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: snapshot.data!.docs.map<Widget>((doc) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return DetailFeedsScreen(
-                              caption: doc.data()['caption'],
-                              username: doc.data()['username'],
-                              images: doc.data()['images'],
-                              uID: doc.id
-                          );
-                        },
-                      ));
-                    },
-                    child: Card(
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          Image.network(doc.data()['images']),
-                          Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    doc.data()['username'],
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+          SingleChildScrollView(
+            child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: StreamBuilder<QuerySnapshot>(
+            stream: posts.snapshots(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: snapshot.data!.docs.map<Widget>((doc) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return DetailFeedsScreen(
+                                caption: doc.data()['caption'],
+                                username: doc.data()['username'],
+                                images: doc.data()['images'],
+                                uID: doc.id
+                            );
+                          },
+                        ));
+                      },
+                      child: Card(
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            Image.network(doc.data()['images']),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Text(
+                                      doc.data()['username'],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Text(doc.data()["caption"]),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                                  Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(doc.data()["caption"]),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
-              );
-            } else {
-              return Text('Loading..');
-            }
-          },
-        ),
-      ),
+                    );
+                  }).toList(),
+                );
+              } else {
+                return const Text('Loading..');
+              }
+            },
+                  ),
+                ),
+          ),
       // ListView.builder(
       //   itemCount: 3,
       //   itemBuilder: (context, index) {
@@ -157,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           width: 90,
           child: Row(
-            children: [
+            children: const [
               Icon(Icons.add),
               Text('Add Post'),
             ],

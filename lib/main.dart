@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           width: 200,
         ),
         duration: 3000,
-        nextScreen: MyHomePage(title: 'ArcheryClub'),
+        nextScreen: const MyHomePage(title: 'ArcheryClub'),
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: Colors.white,
       ),
