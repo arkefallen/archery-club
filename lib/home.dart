@@ -1,7 +1,7 @@
 import 'package:archery_club/detail_feeds.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'post.dart';
+import 'create_feeds.dart';
 import 'feeds.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -50,19 +50,19 @@ class _MyHomePageState extends State<MyHomePage> {
                           return DetailFeedsScreen(
                               caption: doc.data()['caption'],
                               username: doc.data()['username'],
-                              images: doc.data()['images']);
+                              images: doc.data()['images'],
+                              uID: doc.id
+                          );
                         },
                       ));
                     },
                     child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
                       color: Colors.white,
                       child: Column(
                         children: [
                           Image.network(doc.data()['images']),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(10.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
@@ -166,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return Post();
+              return CreateFeeds();
             },
           ));
         },

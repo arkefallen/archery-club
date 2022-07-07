@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Post extends StatelessWidget {
+class CreateFeeds extends StatelessWidget {
   TextEditingController captionController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController firstImgController = TextEditingController();
