@@ -1,40 +1,13 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 
-class Splash extends StatefulWidget {
+class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
 
   @override
-  State<Splash> createState() => _SplashState();
-}
-
-class _SplashState extends State<Splash> {
-  @override
-  void initState() {
-    super.initState();
-    _navigateToHome();
-  }
-
-  _navigateToHome() async {
-    await Future.delayed(const Duration(milliseconds: 1500), () {
-      // Push replacement
-
-      /*  
-          Untuk bisa berpindah dari halaman saat ini ke halaman lain
-          lalu tidak bisa lagi kembali ke halaman awal 
-      */
-
-      Navigator.pushReplacement(
-        context, 
-        MaterialPageRoute(
-          builder: (context) => const MyHomePage(title: 'ArcheryClub')
-        )  
-      );
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _navigateToHome(context);
+
     return Scaffold(
         body: Center(
       child: Column(
@@ -48,5 +21,20 @@ class _SplashState extends State<Splash> {
         ],
       ),
     ));
+  }
+
+  _navigateToHome(BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 1500), () {
+      // Push replacement
+      /*  
+          Untuk bisa berpindah dari halaman saat ini ke halaman lain
+          lalu tidak bisa lagi kembali ke halaman awal 
+      */
+
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const Home()));
+    });
   }
 }
