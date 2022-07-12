@@ -1,3 +1,4 @@
+import 'package:archery_club/constant/brand_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class CreateFeeds extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        backgroundColor: BrandColor.colorPrimary,
         title: const Text('Feeds Baru'),
         leading: BackButton(
           onPressed: () {
@@ -60,6 +62,7 @@ class CreateFeeds extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(BrandColor.colorPrimary)),
                     onPressed: () {
                       
                       try {

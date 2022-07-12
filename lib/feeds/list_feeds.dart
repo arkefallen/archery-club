@@ -17,7 +17,7 @@ class FeedsList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: BrandColor.colorPrimary,
-          title: const Text("Beranda"),
+          title: const Text("Feeds"),
           actions: [
             TextButton.icon(
               onPressed: () {

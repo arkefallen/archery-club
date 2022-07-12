@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "Member"),
           ],
           currentIndex: _selectedIndex,
