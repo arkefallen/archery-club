@@ -52,7 +52,20 @@ class _MembersListState extends State<MembersList> {
                         children: snapshot.data.docs.map<Widget>((doc) {
                           return InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: ((context) => DetailMembersScreen())));
+                              Navigator.push(context, MaterialPageRoute(builder: (
+                                (context) => DetailMembersScreen(
+                                  id : doc.id,
+                                  name: doc.data()['name'],
+                                  email: doc.data()['email'],
+                                  address: doc.data()['address'],
+                                  phone: doc.data()['phone'],
+                                  gender: doc.data()['gender'],
+                                  job: doc.data()['job'],
+                                  role: doc.data()['role'],
+                                  nik: doc.data()['nik'],
+                                  birthDate: doc.data()['birth_date'],
+                                  joinDate: doc.data()['join_date'],
+                                ))));
                             },
                             child: ListTile(
                               leading: CircleAvatar(
