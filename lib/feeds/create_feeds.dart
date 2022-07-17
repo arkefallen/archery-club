@@ -72,6 +72,8 @@ class CreateFeeds extends StatelessWidget {
                           'images': imagesController.text
                         });
 
+                        
+
                         captionController.text = "";
                         usernameController.text = "";
                         imagesController.text = "";

@@ -82,29 +82,15 @@ class _MembersListState extends State<MembersList> {
                         }).toList(),
                       );
                     } else {
-                      return Text('0');
+                      return Center(
+                        child: Text("Data not found"),
+                      );
                     }
                   })
             ],
           ),
         ),
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: ListView.builder(
-      //     itemCount: 5,
-      //     itemBuilder: (context, index) {
-      //       return Card(
-      //         child: ListTile(
-      //           leading: const CircleAvatar(),
-      //           title: Text("Anggota ${index + 1}"),
-      //           subtitle: const Text("Subtitle"),
-      //           trailing: const Text("Lihat Detail"),
-      //         ),
-      //       );
-      //     },
-      //   ),
-      // ),
     );
   }
 

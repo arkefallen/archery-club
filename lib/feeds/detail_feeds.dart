@@ -65,81 +65,85 @@ class DetailFeedsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return EditFeeds(
-                          caption: caption,
-                          username: username,
-                          images: images,
-                          uID: uID);
-                    }));
-                  },
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.edit,
-                        size: 20,
-                        color: Colors.green,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        'EDIT DATA',
-                        style: TextStyle(color: Colors.green),
-                      )
-                    ],
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return EditFeeds(
+                            caption: caption,
+                            username: username,
+                            images: images,
+                            uID: uID);
+                      }));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.edit,
+                          size: 20,
+                          color: Colors.green,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'EDIT DATA',
+                          style: TextStyle(color: Colors.green),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Konfirmasi'),
-                            content: const Text("Anda yakin ingin menghapus data ?"),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("TIDAK")),
-                              TextButton(
-                                  onPressed: () {
-                                    try {
-                                      posts.doc(uID).delete();
+                  OutlinedButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Konfirmasi'),
+                              content: const Text("Anda yakin ingin menghapus data ?"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("TIDAK")),
+                                TextButton(
+                                    onPressed: () {
+                                      try {
+                                        posts.doc(uID).delete();
 
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                    } catch (e) {
-                                      print(e);
-                                    }
-                                  },
-                                  child: const Text("YA"))
-                            ],
-                          );
-                        });
-                  },
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.delete,
-                        size: 20,
-                        color: Colors.red,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        'HAPUS DATA',
-                        style: TextStyle(color: Colors.red),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      } catch (e) {
+                                        print(e);
+                                      }
+                                    },
+                                    child: const Text("YA"))
+                              ],
+                            );
+                          });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.delete,
+                          size: 20,
+                          color: Colors.red,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'HAPUS DATA',
+                          style: TextStyle(color: Colors.red),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),

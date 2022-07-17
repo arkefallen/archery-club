@@ -34,7 +34,7 @@ class EditFeeds extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text(uID),
+        title: Text("Edit Post"),
         backgroundColor: BrandColor.colorPrimary,
       ),
       body: Padding(

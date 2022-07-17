@@ -4,49 +4,84 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-class CreateMembers extends StatefulWidget {
+class EditMembers extends StatefulWidget {
+  String? id;
+  String? name;
+  String? phone;
+  String? email;
+  String? address;
+  String? gender;
+  String? birthDate;
+  String? joinDate;
+  String? job;
+  String? role;
+  String? nik;
+
+  EditMembers({
+    required this.id,
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.address,
+    required this.gender,
+    required this.birthDate,
+    required this.joinDate,
+    required this.job,
+    required this.role,
+    required this.nik,
+  });
+
   @override
-  State<CreateMembers> createState() => _CreateMembersState();
+  State<EditMembers> createState() => _EditMembersState();
 }
 
-class _CreateMembersState extends State<CreateMembers> {
-  TextEditingController nameController = TextEditingController();
-
-  TextEditingController genderController = TextEditingController();
-
-  TextEditingController phoneController = TextEditingController();
-
-  TextEditingController emailController = TextEditingController();
-
-  TextEditingController addressController = TextEditingController();
-
-  TextEditingController jobController = TextEditingController();
-
-  TextEditingController bornDateController = TextEditingController();
-
-  TextEditingController joinDateController = TextEditingController();
-
-  TextEditingController nikController = TextEditingController();
-
-  TextEditingController roleController = TextEditingController();
-
-  Timestamp? bornDate;
-
-  Timestamp? joniDate;
-
-  String? genderValue = '-';
-  String? roleValue = '-';
-
+class _EditMembersState extends State<EditMembers> {
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference members = firestore.collection('members');
 
+    TextEditingController nameController =
+        TextEditingController(text: widget.name);
+
+    TextEditingController phoneController =
+        TextEditingController(text: widget.phone);
+
+    TextEditingController emailController =
+        TextEditingController(text: widget.email);
+
+    TextEditingController addressController =
+        TextEditingController(text: widget.address);
+
+    TextEditingController jobController =
+        TextEditingController(text: widget.job);
+
+    TextEditingController nikController =
+        TextEditingController(text: widget.nik);
+
+    TextEditingController genderController =
+        TextEditingController(text: widget.gender);
+
+    TextEditingController roleController =
+        TextEditingController(text: widget.role);
+
+    TextEditingController joinDateController =
+        TextEditingController(text: widget.joinDate);
+
+    TextEditingController bornDateController =
+        TextEditingController(text: widget.birthDate);
+
+    String? genderValue = widget.gender;
+    String? roleValue = widget.role;
+
+    DateTime bornDate = DateTime.parse(widget.joinDate!);
+    DateTime joinDate = DateTime.parse(widget.birthDate!);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: BrandColor.colorPrimary,
-        title: const Text('Add New Member'),
+        title: const Text('Edit Member Information'),
         leading: BackButton(
           onPressed: () {
             Navigator.pop(context);
@@ -128,9 +163,33 @@ class _CreateMembersState extends State<CreateMembers> {
                 DateTimeField(
                   onChanged: (value) {
                     setState(() {
+                      joinDateController.text = value.toString();
+                    });
+                  },
+                  initialValue: bornDate,
+                  format: DateFormat("dd-MM-yyyy"),
+                  onShowPicker: (context, currentValue) {
+                    return showDatePicker(
+                        context: context,
+                        initialDate: currentValue ?? DateTime.now(),
+                        firstDate: DateTime(1945),
+                        lastDate: DateTime(2100));
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                        labelText: "Join Date",
+                        hintText: "Choose the date when joined the club",
+                  ),
+                ),
+                const SizedBox(height: 20),
+                DateTimeField(
+                  onChanged: (value) {
+                    setState(() {
                       bornDateController.text = value.toString();
                     });
                   },
+                  initialValue: joinDate,
                   format: DateFormat("dd-MM-yyyy"),
                   onShowPicker: (context, currentValue) {
                     return showDatePicker(
@@ -147,28 +206,6 @@ class _CreateMembersState extends State<CreateMembers> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                DateTimeField(
-                  onChanged: (value) {
-                    setState(() {
-                      joinDateController.text = value.toString();
-                    });
-                  },
-                  format: DateFormat("dd-MM-yyyy"),
-                  onShowPicker: (context, currentValue) {
-                    return showDatePicker(
-                        context: context,
-                        initialDate: currentValue ?? DateTime.now(),
-                        firstDate: DateTime(1945),
-                        lastDate: DateTime(2100));
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    labelText: "Join Date",
-                    hintText: "Choose the date when joined the club",
-                  ),
-                ),
-                const SizedBox(height: 20),
                 TextField(
                   controller: jobController,
                   decoration: InputDecoration(
@@ -180,7 +217,6 @@ class _CreateMembersState extends State<CreateMembers> {
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  maxLength: 16,
                   controller: nikController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -218,7 +254,7 @@ class _CreateMembersState extends State<CreateMembers> {
                         minimumSize: Size.fromHeight(50)),
                     onPressed: () {
                       try {
-                        members.add({
+                        members.doc(widget.id).update({
                           'name': nameController.text,
                           'phone': phoneController.text,
                           'email': emailController.text,
@@ -229,7 +265,6 @@ class _CreateMembersState extends State<CreateMembers> {
                           'role': roleController.text,
                           'birth_date': bornDateController.text,
                           'join_date': joinDateController.text,
-                          'profile_photo': 'assets/img/user.png',
                         });
 
                         nameController.text = '';
@@ -243,6 +278,7 @@ class _CreateMembersState extends State<CreateMembers> {
                         bornDateController.text = '';
                         joinDateController.text = '';
 
+                        Navigator.pop(context);
                         Navigator.pop(context);
                       } catch (e) {
                         showDialog(
@@ -261,7 +297,7 @@ class _CreateMembersState extends State<CreateMembers> {
                                 ));
                       }
                     },
-                    child: const Text("ADD MEMBER")),
+                    child: const Text("UPDATE MEMBER")),
                 const SizedBox(height: 40),
               ],
             ),

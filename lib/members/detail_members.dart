@@ -1,4 +1,5 @@
 import 'package:archery_club/feeds/edit_feeds.dart';
+import 'package:archery_club/members/edit_members.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:archery_club/constant/brand_colors.dart';
@@ -47,16 +48,17 @@ class DetailMembersScreen extends StatelessWidget {
           style: TextStyle(color: BrandColor.colorPrimary),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start, 
+            children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: 
+              Center(
+                child: Column(
                   children: [
                     CircleAvatar(
                       radius: 50,
@@ -64,16 +66,16 @@ class DetailMembersScreen extends StatelessWidget {
                         child: Image.asset('assets/img/user.png'),
                       ),
                     ),
-                    const SizedBox(width: 15),
+                    SizedBox(height: 15),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           name!,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                          textAlign:TextAlign.center,
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 8),
                         Text(
                           gender!,
                           style: TextStyle(
@@ -83,191 +85,287 @@ class DetailMembersScreen extends StatelessWidget {
                       ],
                     )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
+            Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Job',
+                                style: TextStyle(
+                                    color: BrandColor.hintColor, fontSize: 14),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                job!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 30),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Role',
+                                style: TextStyle(
+                                    color: BrandColor.hintColor, fontSize: 14),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                role!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Phone',
+                                style: TextStyle(
+                                    color: BrandColor.hintColor, fontSize: 14),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                phone!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 30),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Email',
+                                style: TextStyle(
+                                    color: BrandColor.hintColor, fontSize: 14),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                email!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Birth Date',
+                                style: TextStyle(
+                                    color: BrandColor.hintColor, fontSize: 14),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                birthDate!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 30),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Join Date',
+                                style: TextStyle(
+                                    color: BrandColor.hintColor, fontSize: 14),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                joinDate!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Address',
+                                style: TextStyle(
+                                    color: BrandColor.hintColor, fontSize: 14),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                address!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 30),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'NIK',
+                                style: TextStyle(
+                                    color: BrandColor.hintColor, fontSize: 14),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                nik!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                            MaterialPageRoute(builder: (BuildContext context) {
+                                return EditMembers(
+                                  id: id, 
+                                  name: name, 
+                                  phone: phone, 
+                                  email: email, 
+                                  address: address,
+                                  gender: gender, 
+                                  birthDate: birthDate, 
+                                  joinDate: joinDate, 
+                                  job: job, 
+                                  role: role, 
+                                  nik: nik
+                                );
+                              }
+                            )
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.edit,
+                              size: 20,
+                              color: Colors.green,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'EDIT DATA',
+                              style: TextStyle(color: Colors.green),
+                            )
+                          ],
+                        ),
+                      ),
+                      OutlinedButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Confirmation'),
+                                  content: const Text("Are you sure want to remove the data ?"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text("NO")),
+                                    TextButton(
+                                        onPressed: () {
+                                          try {
+                                            members.doc(id).delete();
+                      
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          } catch (e) {
+                                            print(e);
+                                          }
+                                        },
+                                        child: const Text("YA"))
+                                  ],
+                                );
+                              });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.delete,
+                              size: 20,
+                              color: Colors.red,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'REMOVE DATA',
+                              style: TextStyle(color: Colors.red),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ]
           ),
-          Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Job',
-                              style: TextStyle(
-                                  color: BrandColor.hintColor, fontSize: 14),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              job!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 30),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Role',
-                              style: TextStyle(
-                                  color: BrandColor.hintColor, fontSize: 14),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              role!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Phone',
-                              style: TextStyle(
-                                  color: BrandColor.hintColor, fontSize: 14),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              phone!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 30),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Email',
-                              style: TextStyle(
-                                  color: BrandColor.hintColor, fontSize: 14),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              email!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Birth Date',
-                              style: TextStyle(
-                                  color: BrandColor.hintColor, fontSize: 14),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              birthDate!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 30),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Join Date',
-                              style: TextStyle(
-                                  color: BrandColor.hintColor, fontSize: 14),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              joinDate!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Address',
-                              style: TextStyle(
-                                  color: BrandColor.hintColor, fontSize: 14),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              address!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 30),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'NIK',
-                              style: TextStyle(
-                                  color: BrandColor.hintColor, fontSize: 14),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              nik!,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ))
-        ]),
+        ),
       ),
     );
   }
