@@ -1,4 +1,3 @@
-import 'package:archery_club/feeds/edit_feeds.dart';
 import 'package:archery_club/members/edit_members.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

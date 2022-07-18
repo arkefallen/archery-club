@@ -72,6 +72,7 @@ class _CreateMembersState extends State<CreateMembers> {
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  keyboardType: TextInputType.number,
                   maxLength: 16,
                   controller: phoneController,
                   decoration: InputDecoration(
@@ -180,6 +181,7 @@ class _CreateMembersState extends State<CreateMembers> {
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  keyboardType: TextInputType.number,
                   maxLength: 16,
                   controller: nikController,
                   decoration: InputDecoration(
@@ -269,5 +271,21 @@ class _CreateMembersState extends State<CreateMembers> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    genderController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    emailController.dispose();
+    addressController.dispose();
+    jobController.dispose();
+    bornDateController.dispose();
+    joinDateController.dispose();
+    nikController.dispose();
+    roleController.dispose();
+    super.dispose();
   }
 }

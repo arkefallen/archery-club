@@ -8,7 +8,7 @@ class Feed {
   Feed({required this.photos, required this.caption, required this.username});
 }
 
-var faker = new Faker();
+var faker = Faker();
 
 var postFeeds = [
   Feed(

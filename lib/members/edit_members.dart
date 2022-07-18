@@ -5,17 +5,17 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class EditMembers extends StatefulWidget {
-  String? id;
-  String? name;
-  String? phone;
-  String? email;
-  String? address;
-  String? gender;
-  String? birthDate;
-  String? joinDate;
-  String? job;
-  String? role;
-  String? nik;
+  final String? id;
+  final String? name;
+  final String? phone;
+  final String? email;
+  final String? address;
+  final String? gender;
+  final String? birthDate;
+  final String? joinDate;
+  final String? job;
+  final String? role;
+  final String? nik;
 
   EditMembers({
     required this.id,

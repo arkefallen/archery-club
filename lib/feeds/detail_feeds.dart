@@ -21,9 +21,6 @@ class DetailFeedsScreen extends StatelessWidget {
     CollectionReference posts = firestore.collection('posts');
 
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: BackButton(onPressed: () => Navigator.pop(context)),
-      // ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
