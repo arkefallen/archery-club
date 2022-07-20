@@ -49,10 +49,17 @@ class _CreateWorkshopState extends State<CreateWorkshop> {
                     DateTimeField(
                       onChanged: (value) {
                         setState(() {
-                          dateController.text = value.toString();
+                          if ( value != null ) {
+                            String dateTime =
+                              DateFormat.yMMMMd('en_US').format(value);
+                            dateController.text = dateTime;
+                          } else {
+                            dateController.text = '';
+                          }
+
                         });
                       },
-                      format: DateFormat("dd-MM-yyyy"),
+                      format: DateFormat.yMMMMd('en_US'),
                       onShowPicker: (context, currentValue) {
                         return showDatePicker(
                             context: context,
@@ -71,10 +78,11 @@ class _CreateWorkshopState extends State<CreateWorkshop> {
                     DateTimeField(
                       onChanged: (value) {
                         setState(() {
-                          startTimeController.text = value.toString();
+                          String startTime = DateFormat.Hm().format(value!);
+                          startTimeController.text = startTime;
                         });
                       },
-                      format: DateFormat("HH:mm"),
+                      format: DateFormat.Hm(),
                       onShowPicker: (context, currentValue) async {
                         final time = await showTimePicker(
                             context: context,
@@ -92,10 +100,11 @@ class _CreateWorkshopState extends State<CreateWorkshop> {
                     DateTimeField(
                       onChanged: (value) {
                         setState(() {
-                          endTimeController.text = value.toString();
+                          String endTime = DateFormat.Hm().format(value!);
+                          endTimeController.text = endTime;
                         });
                       },
-                      format: DateFormat("HH:mm"),
+                      format: DateFormat.Hm(),
                       onShowPicker: (context, currentValue) async {
                         final time = await showTimePicker(
                             context: context,
