@@ -1,20 +1,35 @@
 import 'package:archery_club/constant/brand_colors.dart';
 import 'package:archery_club/feeds/list_feeds.dart';
 import 'package:archery_club/members/members_list.dart';
+import 'package:archery_club/profile/profile.dart';
 import 'package:archery_club/workshop/list_workshops.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({required this.user});
+  final User user;
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  List screens = [const FeedsList(), const MembersList(), const WorkshopList()];
+  List screens = [];
 
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    screens = [
+      const FeedsList(),
+      const MembersList(),
+      const WorkshopList(),
+      Profile(user: widget.user)
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +37,16 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Member"),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_today_rounded),label: "Exercise"),
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: "Member"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_today_rounded), label: "Exercise"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle_rounded), label: "Profile")
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: BrandColor.colorPrimary,
           onTap: (index) {
-            setState( () {
+            setState(() {
               _selectedIndex = index;
             });
           },

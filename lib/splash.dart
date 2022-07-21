@@ -1,5 +1,5 @@
+import 'package:archery_club/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
 
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class Splash extends StatelessWidget {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => const Home()));
+              builder: (context) => Wrapper()));
     });
   }
 }

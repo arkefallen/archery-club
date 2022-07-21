@@ -3,7 +3,9 @@ import 'package:archery_club/home.dart';
 import 'package:archery_club/members/create_members.dart';
 import 'package:archery_club/members/detail_members.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MembersList extends StatefulWidget {
   const MembersList({Key? key}) : super(key: key);
@@ -13,10 +15,12 @@ class MembersList extends StatefulWidget {
 }
 
 class _MembersListState extends State<MembersList> {
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference members = firestore.collection('members');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -97,13 +101,15 @@ class _MembersListState extends State<MembersList> {
   }
 
   void _selectedMenu(String choice, BuildContext context) {
+    User firebaseUser = Provider.of<User>(context);
+
     setState(() {
       if (choice == Menu.addMember) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => CreateMembers()));
       } else {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Home()));
+            context, MaterialPageRoute(builder: (context) => Home(user: firebaseUser)));
       }
     });
   }
