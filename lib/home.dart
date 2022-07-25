@@ -38,10 +38,10 @@ class _HomeState extends State<Home> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "Member"),
+            BottomNavigationBarItem(icon: Icon(Icons.calendar_today_rounded), label: "Exercise"),
+                // BottomNavigationBarItem(icon: Icon(Icons.track_changes), label: "Scoring"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today_rounded), label: "Exercise"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_rounded), label: "Profile")
+                icon: Icon(Icons.manage_accounts), label: "Profile")
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: BrandColor.colorPrimary,

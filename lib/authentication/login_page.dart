@@ -1,4 +1,5 @@
-import 'package:archery_club/auth_services.dart';
+import 'package:archery_club/authentication/auth_services.dart';
+import 'package:archery_club/authentication/signup_page.dart';
 import 'package:archery_club/constant/brand_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 80),
+          padding: const EdgeInsets.symmetric(horizontal: 80),
           child: Image.asset("assets/img/logo.png"),
         ),
         backgroundColor: Colors.white,
@@ -23,14 +24,17 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 "Welcome to Archery Club !",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 5),
               Text(
                 "Sign In with your account or register if you don't have it",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: BrandColor.hintColor),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    color: BrandColor.hintColor),
               ),
               const SizedBox(height: 40),
               TextField(
@@ -59,21 +63,23 @@ class LoginPage extends StatelessWidget {
                   await AuthServices.signIn(
                       emailController.text, passwordController.text);
                 },
-                child: Text("SIGN IN"),
+                child: const Text("SIGN IN"),
                 style: ElevatedButton.styleFrom(
                     primary: BrandColor.colorPrimary,
-                    minimumSize: Size.fromHeight(50)),
+                    minimumSize: const Size.fromHeight(50)),
               ),
               const SizedBox(height: 20),
               OutlinedButton(
                 onPressed: () async {
-                  await AuthServices.signUp(
-                      emailController.text, passwordController.text);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterAccount()));
                 },
-                child: Text("REGISTER"),
+                child: const Text("REGISTER"),
                 style: OutlinedButton.styleFrom(
                     primary: BrandColor.colorPrimary,
-                    minimumSize: Size.fromHeight(50)),
+                    minimumSize: const Size.fromHeight(50)),
               ),
             ],
           ),

@@ -5,17 +5,17 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class EditMembers extends StatefulWidget {
-  final String? id;
-  final String? name;
-  final String? phone;
-  final String? email;
-  final String? address;
-  final String? gender;
-  final String? birthDate;
-  final String? joinDate;
-  final String? job;
-  final String? role;
-  final String? nik;
+  String? id;
+  String? name;
+  String? phone;
+  String? email;
+  String? address;
+  String? gender;
+  String? birthDate;
+  String? joinDate;
+  String? job;
+  String? role;
+  String? nik;
 
   EditMembers({
     required this.id,
@@ -65,10 +65,12 @@ class _EditMembersState extends State<EditMembers> {
     TextEditingController roleController =
         TextEditingController(text: widget.role);
 
+    TextEditingController bornDateController =
+        TextEditingController(text: widget.birthDate);
+
     TextEditingController joinDateController =
         TextEditingController(text: widget.joinDate);
-
-    TextEditingController bornDateController =
+    TextEditingController birthDateController =
         TextEditingController(text: widget.birthDate);
 
     String? genderValue = widget.gender;
@@ -157,6 +159,7 @@ class _EditMembersState extends State<EditMembers> {
                       setState(() {
                         genderValue = newGenderValue;
                         genderController.text = newGenderValue!;
+                        widget.gender = newGenderValue;
                       });
                     }),
                 const SizedBox(height: 20),
@@ -178,8 +181,8 @@ class _EditMembersState extends State<EditMembers> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5)),
-                        labelText: "Join Date",
-                        hintText: "Choose the date when joined the club",
+                    labelText: "Join Date",
+                    hintText: "Choose the date when joined the club",
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -217,6 +220,7 @@ class _EditMembersState extends State<EditMembers> {
                 ),
                 const SizedBox(height: 20),
                 TextField(
+                  maxLength: 16,
                   controller: nikController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -245,6 +249,7 @@ class _EditMembersState extends State<EditMembers> {
                       setState(() {
                         roleValue = newRoleValue;
                         roleController.text = newRoleValue!;
+                        widget.role = newRoleValue;
                       });
                     }),
                 const SizedBox(height: 20),

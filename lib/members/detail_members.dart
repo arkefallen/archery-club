@@ -2,6 +2,7 @@ import 'package:archery_club/members/edit_members.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:archery_club/constant/brand_colors.dart';
+import 'package:intl/intl.dart';
 
 class DetailMembersScreen extends StatelessWidget {
   String? id;
@@ -285,11 +286,11 @@ class DetailMembersScreen extends StatelessWidget {
                                   phone: phone, 
                                   email: email, 
                                   address: address,
-                                  gender: gender, 
-                                  birthDate: birthDate, 
-                                  joinDate: joinDate, 
+                                  gender: ( gender == '' ) ? '-' : gender, 
+                                  birthDate: ( birthDate == '' ) ? DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()) : birthDate, 
+                                  joinDate: ( joinDate == '' ) ? DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()) : joinDate, 
                                   job: job, 
-                                  role: role, 
+                                  role: ( role == '' ) ? '-' : role, 
                                   nik: nik
                                 );
                               }
