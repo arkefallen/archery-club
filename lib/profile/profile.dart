@@ -18,7 +18,7 @@ class Profile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Hi, ${user} !"),
+              Text("Hi, ${user.displayName} !"),
               ElevatedButton(
                   onPressed: () async {
                     await AuthServices.signOut();

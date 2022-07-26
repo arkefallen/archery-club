@@ -1,6 +1,8 @@
 import 'package:archery_club/constant/brand_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateFeeds extends StatelessWidget {
   TextEditingController captionController = TextEditingController();
@@ -10,7 +12,8 @@ class CreateFeeds extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference posts = firestore.collection('posts');
-    
+    CollectionReference user_posts = firestore.collection('user_posts');
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -62,17 +65,24 @@ class CreateFeeds extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(BrandColor.colorPrimary)),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            BrandColor.colorPrimary)),
                     onPressed: () {
-                      
+                      User? currentUser = Provider.of<User?>(context,listen: false);
+
                       try {
                         posts.add({
+                          'user_id': currentUser?.uid,
                           'caption': captionController.text,
                           'username': usernameController.text,
                           'images': imagesController.text
-                        });
-
-                        
+                        }).then(
+                          (value) => user_posts.add({
+                              'user_id': currentUser?.uid,
+                              'post_id': value.id
+                            })
+                        );
 
                         captionController.text = "";
                         usernameController.text = "";
@@ -81,20 +91,19 @@ class CreateFeeds extends StatelessWidget {
                         Navigator.pop(context);
                       } catch (e) {
                         showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                                title: const Text('Insert Result'),
-                                content: const Text("Proses gagal."),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'Kembali'),
-                                    child: const Text('Kembali'),
-                                  )
-                                ],
-                        ));
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Insert Result'),
+                                  content: const Text("Proses gagal."),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Kembali'),
+                                      child: const Text('Kembali'),
+                                    )
+                                  ],
+                                ));
                       }
-
                     },
                     child: const Text("TAMBAH DATA"))
               ],

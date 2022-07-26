@@ -1,5 +1,6 @@
 import 'package:archery_club/authentication/auth_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/brand_colors.dart';
@@ -69,7 +70,12 @@ class RegisterAccount extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 try {
+
+                  User? userResult = await AuthServices.signUp(
+                      emailController.text, passwordController.text, nameController.text);
+
                   members.add({
+                    'id' : userResult?.uid,
                     'name': nameController.text,
                     'email': emailController.text,
                     'password': passwordController.text,
@@ -83,10 +89,6 @@ class RegisterAccount extends StatelessWidget {
                     'nik': '',
                     'profile_photo': 'assets/img/user.png'
                   });
-
-                  await AuthServices.signUp(
-                      emailController.text, passwordController.text, nameController.text);
-
                   Navigator.pop(context);
                 } catch (e) {
                   showDialog(
