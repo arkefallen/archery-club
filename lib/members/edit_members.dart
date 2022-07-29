@@ -70,6 +70,7 @@ class _EditMembersState extends State<EditMembers> {
 
     TextEditingController joinDateController =
         TextEditingController(text: widget.joinDate);
+
     TextEditingController birthDateController =
         TextEditingController(text: widget.birthDate);
 
@@ -169,7 +170,7 @@ class _EditMembersState extends State<EditMembers> {
                       joinDateController.text = value.toString();
                     });
                   },
-                  initialValue: bornDate,
+                  initialValue: (bornDate),
                   format: DateFormat("dd-MM-yyyy"),
                   onShowPicker: (context, currentValue) {
                     return showDatePicker(
