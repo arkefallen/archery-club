@@ -1,6 +1,7 @@
 import 'package:archery_club/constant/brand_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:intl/intl.dart';
 
 class DetailWorkshop extends StatelessWidget {
   String? notes;
@@ -26,30 +27,38 @@ class DetailWorkshop extends StatelessWidget {
         title: const Text("Workshop Detail"),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Badge(
-              badgeColor: BrandColor.colorPrimary,
-              badgeContent: const Text("Location"),
-            ),
-            Text(
-              notes!,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24
+        child: Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Badge(
+              //   badgeColor: BrandColor.colorPrimary,
+              //   badgeContent: const Text("Location"),
+              // ),
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                child: Text(
+                  notes!,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 24),
+                ),
               ),
-            ),
-            const Text("Date"),
-            Text(
-              date!
-            ),
-            const Text(
-              "Start Time"
-            ),
-            Text(startTime!),
-            const Text("End Time"),
-            Text(endTime!)
-          ],
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Date"),
+                  // Text(date!),
+
+                  Text(DateFormat('d MMMM y').format(DateTime.parse(date!))),
+                ],
+              ),
+              const Text("Start Time"),
+              Text(startTime!),
+              const Text("End Time"),
+              Text(endTime!)
+            ],
+          ),
         ),
       ),
     );

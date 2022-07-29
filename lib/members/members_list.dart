@@ -15,7 +15,6 @@ class MembersList extends StatefulWidget {
 }
 
 class _MembersListState extends State<MembersList> {
-
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -101,15 +100,15 @@ class _MembersListState extends State<MembersList> {
   }
 
   void _selectedMenu(String choice, BuildContext context) {
-    User firebaseUser = Provider.of<User>(context);
+    User firebaseUser = Provider.of<User>(context, listen: false);
 
     setState(() {
       if (choice == Menu.addMember) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => CreateMembers()));
       } else {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Home(user: firebaseUser)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Home(user: firebaseUser)));
       }
     });
   }
