@@ -9,6 +9,7 @@ class RegisterAccount extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class RegisterAccount extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Sign Up",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
@@ -43,6 +44,16 @@ class RegisterAccount extends StatelessWidget {
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                 labelText: "Full Name",
                 hintText: "Input your name",
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: phoneController,
+              decoration: InputDecoration(
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                labelText: "Phone Number",
+                hintText: "ex : 081123456789",
               ),
             ),
             const SizedBox(height: 20),
@@ -70,16 +81,18 @@ class RegisterAccount extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 try {
-
                   User? userResult = await AuthServices.signUp(
-                      emailController.text, passwordController.text, nameController.text);
+                      emailController.text,
+                      passwordController.text,
+                      nameController.text,
+                      context);
 
                   members.add({
-                    'id' : userResult?.uid,
+                    'id': userResult?.uid,
                     'name': nameController.text,
                     'email': emailController.text,
                     'password': passwordController.text,
-                    'phone': '',
+                    'phone': phoneController.text,
                     'address': '',
                     'gender': '',
                     'birth_date': '',
@@ -89,26 +102,18 @@ class RegisterAccount extends StatelessWidget {
                     'nik': '',
                     'profile_photo': 'assets/img/user.png'
                   });
+
                   Navigator.pop(context);
                 } catch (e) {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Failed Register'),
-                            content: Text(e.toString()),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, 'Back'),
-                                child: const Text('Back'),
-                              )
-                            ],
-                          ));
+                  return null;
                 }
               },
               child: const Text("REGISTER ACCOUNT"),
-              style: ElevatedButton.styleFrom(
-                  primary: BrandColor.colorPrimary,
-                  minimumSize: const Size.fromHeight(50)),
+              style: 
+              ElevatedButton.styleFrom(
+                    primary: BrandColor.colorPrimary,
+                    minimumSize: const Size.fromHeight(50)
+              ),
             ),
           ],
         )),

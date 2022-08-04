@@ -1,4 +1,5 @@
 import 'package:archery_club/feeds/edit_feeds.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:archery_club/constant/brand_colors.dart';
@@ -12,7 +13,7 @@ class DetailFeedsScreen extends StatelessWidget {
 
   String caption;
   String username;
-  String images;
+  List<String>? images;
   String uID;
 
   @override
@@ -27,7 +28,7 @@ class DetailFeedsScreen extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: [
-                Image.network(images),
+                CarouselSlider(items: images?.map((e) => Image.network(e)).toList(), options: CarouselOptions(aspectRatio: 1/1,enableInfiniteScroll: false)),
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -73,7 +74,6 @@ class DetailFeedsScreen extends StatelessWidget {
                         return EditFeeds(
                             caption: caption,
                             username: username,
-                            images: images,
                             uID: uID);
                       }));
                     },

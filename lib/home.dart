@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     screens = [
-      const FeedsList(),
+      FeedsList(),
       const MembersList(),
       const WorkshopList(),
       Profile(user: widget.user)

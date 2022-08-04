@@ -101,12 +101,12 @@ class _MembersListState extends State<MembersList> {
   }
 
   void _selectedMenu(String choice, BuildContext context) {
-    User firebaseUser = Provider.of<User>(context);
+    User firebaseUser = Provider.of<User>(context, listen: false);
 
     setState(() {
       if (choice == Menu.addMember) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => CreateMembers()));
+            context, MaterialPageRoute(builder: (BuildContext context) => CreateMembers()));
       } else {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Home(user: firebaseUser)));
