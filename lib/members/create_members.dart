@@ -30,10 +30,6 @@ class _CreateMembersState extends State<CreateMembers> {
 
   TextEditingController roleController = TextEditingController();
 
-  Timestamp? bornDate;
-
-  Timestamp? joniDate;
-
   String? genderValue = '-';
   String? roleValue = '-';
 

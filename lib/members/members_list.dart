@@ -15,7 +15,6 @@ class MembersList extends StatefulWidget {
 }
 
 class _MembersListState extends State<MembersList> {
-
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -108,8 +107,8 @@ class _MembersListState extends State<MembersList> {
         Navigator.push(
             context, MaterialPageRoute(builder: (BuildContext context) => CreateMembers()));
       } else {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Home(user: firebaseUser)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Home(user: firebaseUser)));
       }
     });
   }
