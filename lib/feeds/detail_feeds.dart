@@ -1,3 +1,4 @@
+import 'package:archery_club/authentication/storage_services.dart';
 import 'package:archery_club/feeds/edit_feeds.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,14 +7,10 @@ import 'package:archery_club/constant/brand_colors.dart';
 
 class DetailFeedsScreen extends StatelessWidget {
   DetailFeedsScreen(
-      {required this.caption,
-      required this.username,
-      required this.images,
-      required this.uID});
+      {required this.caption, required this.username, required this.uID});
 
   String caption;
   String username;
-  List<String>? images;
   String uID;
 
   @override
@@ -28,7 +25,27 @@ class DetailFeedsScreen extends StatelessWidget {
           children: <Widget>[
             Stack(
               children: [
-                CarouselSlider(items: images?.map((e) => Image.network(e)).toList(), options: CarouselOptions(aspectRatio: 1/1,enableInfiniteScroll: false)),
+                // CarouselSlider(items: images?.map((e) => Image.network(e)).toList(), options: CarouselOptions(aspectRatio: 1/1,enableInfiniteScroll: false)),
+                FutureBuilder<List<String>>(
+                  future: StorageServices().getImageFeedsURL(uID),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasData) {
+                      return CarouselSlider(
+                          items: snapshot.data
+                              ?.map((e) => Image.network(
+                                    e,
+                                    fit: BoxFit.contain,
+                                  ))
+                              .toList(),
+                          options: CarouselOptions(
+                              enableInfiniteScroll: false, aspectRatio: 1 / 1));
+                    } else {
+                      return Center(child: Text("Error"));
+                    }
+                  },
+                ),
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -72,9 +89,7 @@ class DetailFeedsScreen extends StatelessWidget {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (BuildContext context) {
                         return EditFeeds(
-                            caption: caption,
-                            username: username,
-                            uID: uID);
+                            caption: caption, username: username, uID: uID);
                       }));
                     },
                     child: Row(
@@ -100,7 +115,8 @@ class DetailFeedsScreen extends StatelessWidget {
                           builder: (context) {
                             return AlertDialog(
                               title: const Text('Konfirmasi'),
-                              content: const Text("Anda yakin ingin menghapus data ?"),
+                              content: const Text(
+                                  "Anda yakin ingin menghapus data ?"),
                               actions: [
                                 TextButton(
                                     onPressed: () {

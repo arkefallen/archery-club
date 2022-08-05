@@ -4,7 +4,6 @@ import 'package:archery_club/feeds/create_feeds.dart';
 import 'package:archery_club/feeds/detail_feeds.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class FeedsList extends StatefulWidget {
@@ -13,36 +12,20 @@ class FeedsList extends StatefulWidget {
 }
 
 class _FeedsListState extends State<FeedsList> {
-  // final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  List<String>? currentFeedsImages = [];
 
   Future<List<String>> getImageURLfromPostID(String postID) async {
     final List<String> imageFeedsURL =
         await StorageServices().getImageFeedsURL(postID);
-    // imageFeedsURL.then((value) {
-    //   urls.add(value);
-    //   print("Isi url : ${value.toString()}");
-    // });
-
-    // imageFeedsURL.forEach((element) {
-    //   urls.add(element);
-    // });
 
     print("Isi URL : $imageFeedsURL");
     return imageFeedsURL;
   }
 
-  // Future getDirectories() async {
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference posts = firestore.collection('posts');
-
-    List<String>? currentFeedsImages;
-
-    // Future<ListResult> allPosts =
-    //     FirebaseStorage.instance.ref('posts/').listAll();
-
-    // print(getDirectories());
 
     return Scaffold(
       appBar: AppBar(
@@ -86,7 +69,6 @@ class _FeedsListState extends State<FeedsList> {
                               return DetailFeedsScreen(
                                   caption: doc.data()['caption'],
                                   username: doc.data()['username'],
-                                  images: currentFeedsImages,
                                   uID: doc.id);
                             },
                           ));
@@ -95,7 +77,6 @@ class _FeedsListState extends State<FeedsList> {
                           color: Colors.white,
                           child: Column(
                             children: [
-                              // Image.network(doc.data()['images']),
                               FutureBuilder<List<String>>(
                                 future:
                                     StorageServices().getImageFeedsURL(doc.id),
@@ -105,14 +86,20 @@ class _FeedsListState extends State<FeedsList> {
                                     return Center(
                                         child: CircularProgressIndicator());
                                   } else if (snapshot.hasData) {
-                                    currentFeedsImages = snapshot.data;
-                                    return CarouselSlider(
-                                      items: snapshot.data
-                                          ?.map((e) => Image.network(e))
-                                          .toList(),
-                                      options: CarouselOptions(
-                                          aspectRatio: 4 / 5,
-                                          enableInfiniteScroll: false),
+                                    return Column(
+                                      children: [
+                                        Container(
+                                          child: CarouselSlider(
+                                            items: snapshot.data?.map((e) {
+                                              return Image.network(e,
+                                                  fit: BoxFit.contain);
+                                            }).toList(),
+                                            options: CarouselOptions(
+                                                enableInfiniteScroll: false,
+                                                aspectRatio: 1 / 1),
+                                          ),
+                                        ),
+                                      ],
                                     );
                                   } else {
                                     return Text("Error");
@@ -152,18 +139,6 @@ class _FeedsListState extends State<FeedsList> {
                 }
               },
             ),
-            // FutureBuilder(
-            //   future: allPosts,
-            //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-            //     print(StorageServices().getAllPost());
-            //     final tes = StorageServices().getAllPost();
-            //     return Column(
-            //       children: [
-            //         Text('Isi post : ${StorageServices().getAllPost()}')
-            //       ],
-            //     );
-            //   },
-            // )
           ]),
         ),
       ),

@@ -4,18 +4,6 @@ import 'package:flutter/material.dart';
 class AuthServices {
   static FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // static Future<User?> signInAnonymous() async {
-  //   // store the result of sign in anonymously process
-  //   try {
-  //     UserCredential result = await _auth.signInAnonymously();
-  //     User? firebaseUser = result.user;
-
-  //     return firebaseUser;
-  //   } on FirebaseAuthException catch (e) {
-  //     i
-  //   }
-  // }
-
   static Future<User?> signUp(
       String email, String password, String name, BuildContext context) async {
     try {
