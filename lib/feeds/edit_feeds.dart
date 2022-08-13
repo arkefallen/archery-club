@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 class EditFeeds extends StatelessWidget {
   String caption;
   String username;
-  String images;
+  // String images;
   String uID;
 
   EditFeeds(
       {required this.caption,
       required this.username,
-      required this.images,
       required this.uID});
 
   @override
@@ -23,8 +22,8 @@ class EditFeeds extends StatelessWidget {
         TextEditingController(text: caption);
     TextEditingController usernameController =
         TextEditingController(text: username);
-    TextEditingController imagesController =
-        TextEditingController(text: images);
+    // TextEditingController imagesController =
+    //     TextEditingController(text: images);
 
     return Scaffold(
       appBar: AppBar(
@@ -64,16 +63,16 @@ class EditFeeds extends StatelessWidget {
                     hintText: "Masukkan nama kamu",
                   ),
                 ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: imagesController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    labelText: "Link Gambar",
-                    hintText: "Masukkan link gambar untuk ditampilkan",
-                  ),
-                ),
+                // const SizedBox(height: 20),
+                // TextField(
+                //   controller: imagesController,
+                //   decoration: InputDecoration(
+                //     border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(15)),
+                //     labelText: "Link Gambar",
+                //     hintText: "Masukkan link gambar untuk ditampilkan",
+                //   ),
+                // ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
@@ -81,12 +80,12 @@ class EditFeeds extends StatelessWidget {
                       posts.doc(uID).update({
                         'caption': captionController.text,
                         'username': usernameController.text,
-                        'images': imagesController.text
+                        // 'images': imagesController.text
                       });
 
                       captionController.text = "";
                       usernameController.text = "";
-                      imagesController.text = "";
+                      // imagesController.text = "";
 
                       Navigator.pop(context);
                       Navigator.pop(context);
