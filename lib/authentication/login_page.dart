@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                "Welcome to Archery Club !",
+                "Welcome !",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 5),
@@ -60,8 +60,58 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
-                  await AuthServices.signIn(
+                  var signInResult = await AuthServices.signIn(
                       emailController.text, passwordController.text);
+
+                  if ( signInResult == 'invalid-email' ) {
+                    return showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Login Failed'),
+                          content:
+                              const Text('The email that you input is not valid'),
+                          actions: [
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Back'))
+                          ],
+                        );
+                      },
+                    );
+                  } else if ( signInResult == 'wrong-password') {
+                    return showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Invalid Password'),
+                          content:
+                              const Text('You entered a wrong password or invalid'),
+                          actions: [
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Back'))
+                          ],
+                        );
+                      },
+                    );
+                  } else if ( signInResult == 'user-not-found' ) {
+                    return showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('User not Found'),
+                          content:
+                              const Text('There is no user found corresponding to the given email'),
+                          actions: [
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Back'))
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
                 child: const Text("SIGN IN"),
                 style: ElevatedButton.styleFrom(

@@ -2,6 +2,7 @@ import 'package:archery_club/constant/brand_colors.dart';
 import 'package:archery_club/feeds/list_feeds.dart';
 import 'package:archery_club/members/members_list.dart';
 import 'package:archery_club/profile/profile.dart';
+import 'package:archery_club/scoring/scoring_list.dart';
 import 'package:archery_club/workshop/list_workshops.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +24,11 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     screens = [
-      const FeedsList(),
+      FeedsList(),
       const MembersList(),
       // const WorkshopList(),
       WorkshopList(user: widget.user),
+      const Scoring(),
       Profile(user: widget.user)
     ];
     super.initState();
@@ -41,7 +43,8 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "Member"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_today_rounded), label: "Exercise"),
-            // BottomNavigationBarItem(icon: Icon(Icons.track_changes), label: "Scoring"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.track_changes), label: "Scoring"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.manage_accounts), label: "Profile")
           ],
