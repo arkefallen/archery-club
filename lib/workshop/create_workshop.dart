@@ -13,6 +13,7 @@ class CreateWorkshop extends StatefulWidget {
 
 class _CreateWorkshopState extends State<CreateWorkshop> {
   TextEditingController notesController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController startTimeController = TextEditingController();
   TextEditingController endTimeController = TextEditingController();
@@ -46,6 +47,20 @@ class _CreateWorkshopState extends State<CreateWorkshop> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5)),
                           labelText: "Notes",
+                          hintText: "e.g. workshop name"),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      controller: locationController,
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          labelText: "Location",
                           hintText: "e.g. where the workshop takes place"),
                     ),
                     const SizedBox(height: 20),
@@ -135,12 +150,14 @@ class _CreateWorkshopState extends State<CreateWorkshop> {
                           try {
                             workshops.add({
                               'notes': notesController.text,
+                              'location': locationController.text,
                               'date': dateController.text,
                               'start_time': startTimeController.text,
                               'end_time': endTimeController.text,
                             });
 
                             notesController.text = '';
+                            locationController.text = '';
                             dateController.text = '';
                             startTimeController.text = '';
                             endTimeController.text = '';
@@ -152,7 +169,7 @@ class _CreateWorkshopState extends State<CreateWorkshop> {
                                 builder: (BuildContext context) => AlertDialog(
                                       title: const Text('Insert Result'),
                                       content: const Text(
-                                          "Failed to add new member"),
+                                          "Failed to add new workshop"),
                                       actions: <Widget>[
                                         TextButton(
                                           onPressed: () =>

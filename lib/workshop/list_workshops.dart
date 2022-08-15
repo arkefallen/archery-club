@@ -3,11 +3,14 @@ import 'package:archery_club/workshop/create_workshop.dart';
 import 'package:archery_club/workshop/detail_workshop.dart';
 import 'package:archery_club/workshop/edit_workshop.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class WorkshopList extends StatefulWidget {
-  const WorkshopList({Key? key}) : super(key: key);
+  // const WorkshopList({Key? key, required this.user}) : super(key: key);
+  const WorkshopList({required this.user});
+  final User user;
 
   @override
   State<WorkshopList> createState() => _WorkshopListState();
@@ -55,11 +58,15 @@ class _WorkshopListState extends State<WorkshopList> {
                     children: snapshot.data.docs.map<Widget>((doc) {
                       return InkWell(
                         onTap: () {
+                          // print(widget.user);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: ((context) => DetailWorkshop(
+                                      user: widget.user,
+                                      id: doc.id,
                                       notes: doc.data()['notes'],
+                                      location: doc.data()['location'],
                                       date: doc.data()['date'],
                                       startTime: doc.data()['start_time'],
                                       endTime: doc.data()['end_time']))));
@@ -67,7 +74,10 @@ class _WorkshopListState extends State<WorkshopList> {
                         child: Card(
                           elevation: 4,
                           child: ListTile(
-                              leading: const Icon(Icons.pin_drop),
+                              leading: const Icon(
+                                Icons.document_scanner_outlined,
+                                size: 30,
+                              ),
                               title: Text(
                                 doc.data()['notes'],
                                 style: const TextStyle(
@@ -104,62 +114,21 @@ class _WorkshopListState extends State<WorkshopList> {
                                     item,
                                     doc.id,
                                     doc.data()['notes'],
+                                    doc.data()['location'],
                                     doc.data()['date'],
                                     doc.data()['start_time'],
                                     doc.data()['end_time']),
                                 itemBuilder: (context) => [
                                   ...MenuItems.itemFirst.map(buildItem).toList()
                                 ],
-                              )
-
-                              // trailing: PopupMenuButton(
-                              //   itemBuilder: (context) {
-                              //     return [
-                              //       PopupMenuItem(
-                              //           onTap: () {
-                              //             Navigator.push(context, MaterialPageRoute(
-                              //               builder: (context) {
-                              //                 return CreateWorkshop();
-                              //               },
-                              //             ));
-                              //           },
-                              //           value: 'edit',
-                              //           child: Row(
-                              //             children: [
-                              //               Icon(Icons.edit),
-                              //               SizedBox(
-                              //                 width: 20,
-                              //               ),
-                              //               Text('Edit'),
-                              //             ],
-                              //           )),
-                              //       PopupMenuItem(
-                              //           onTap: () {
-                              //             workshops.doc(doc.id).delete();
-                              //           },
-                              //           value: 'delete',
-                              //           child: Row(
-                              //             children: [
-                              //               Icon(Icons.delete_rounded),
-                              //               SizedBox(
-                              //                 width: 20,
-                              //               ),
-                              //               Text('Delete'),
-                              //             ],
-                              //           )),
-                              //     ];
-                              //   },
-                              //   // onSelected: (String value) =>
-                              //   //     actionPopUpItemSelected(value, doc.id),
-                              // )
-                              ),
+                              )),
                         ),
                       );
                     }).toList(),
                   );
                 } else {
                   return const Center(
-                    child: Text("Data not found"),
+                    child: Text("Loading ..."),
                   );
                 }
               },
@@ -190,6 +159,7 @@ class _WorkshopListState extends State<WorkshopList> {
     MenuItem item,
     String id,
     String notes,
+    String location,
     String date,
     String startTime,
     String endTime,
@@ -203,6 +173,7 @@ class _WorkshopListState extends State<WorkshopList> {
             return EditWorkshop(
                 id: id,
                 notes: notes,
+                location: location,
                 date: date,
                 start_time: startTime,
                 end_time: endTime);

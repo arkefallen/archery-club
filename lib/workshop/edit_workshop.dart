@@ -5,12 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class EditWorkshop extends StatefulWidget {
-  // final id;
-  // final String notes, date, start_time, end_time;
-
-  // const EditWorkshop({Key? key, required this.id, required this.notes, required this.date, required this.start_time, required this.end_time}) : super(key: key);
   String? id;
   String? notes;
+  String? location;
   String? date;
   String? start_time;
   String? end_time;
@@ -18,6 +15,7 @@ class EditWorkshop extends StatefulWidget {
   EditWorkshop({
     required this.id,
     required this.notes,
+    required this.location,
     required this.date,
     required this.start_time,
     required this.end_time,
@@ -29,6 +27,7 @@ class EditWorkshop extends StatefulWidget {
 
 class _EditWorkshopState extends State<EditWorkshop> {
   TextEditingController notesController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController startTimeController = TextEditingController();
   TextEditingController endTimeController = TextEditingController();
@@ -36,16 +35,6 @@ class _EditWorkshopState extends State<EditWorkshop> {
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference workshop = firestore.collection('workshops');
-
-    // TextEditingController notesController = TextEditingController();
-    // TextEditingController notesController =
-    //     TextEditingController(text: widget.notes);
-    // TextEditingController dateController =
-    //     TextEditingController(text: widget.date);
-    // TextEditingController startTimeController =
-    //     TextEditingController(text: widget.start_time);
-    // TextEditingController endTimeController =
-    //     TextEditingController(text: widget.end_time);
 
     DateTime eventDate = DateTime.parse(widget.date!);
     DateTime eventStartTime = DateTime.parse(widget.start_time!);
@@ -68,17 +57,22 @@ class _EditWorkshopState extends State<EditWorkshop> {
                 child: Column(
                   children: [
                     TextField(
-                      // onChanged: (value) {
-                      //   setState(() {
-                      //     notesController.text = value.toString();
-                      //   });
-                      // },
                       controller: notesController =
                           TextEditingController(text: widget.notes),
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5)),
                           labelText: "Notes",
+                          hintText: "e.g. workshop name"),
+                    ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: locationController =
+                          TextEditingController(text: widget.location),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          labelText: "Location",
                           hintText: "e.g. where the workshop takes place"),
                     ),
                     const SizedBox(height: 20),
@@ -88,8 +82,6 @@ class _EditWorkshopState extends State<EditWorkshop> {
                           dateController.text = value.toString();
                         });
                       },
-                      // controller: dateController =
-                      //     TextEditingController(text: widget.date),
                       initialValue: eventDate,
                       format: DateFormat('d MMMM y'),
                       onShowPicker: (context, currentValue) {
@@ -110,15 +102,9 @@ class _EditWorkshopState extends State<EditWorkshop> {
                     DateTimeField(
                       onChanged: (value) {
                         setState(() {
-                          // String startTime = DateFormat.Hm().format(value!);
-                          // startTimeController.text = startTime;
                           startTimeController.text = value.toString();
-                          // startTimeController =
-                          //     TextEditingController(text: widget.start_time);
                         });
                       },
-                      // controller: startTimeController =
-                      //     TextEditingController(text: widget.start_time),
                       initialValue: eventStartTime,
                       format: DateFormat.Hm(),
                       onShowPicker: (context, currentValue) async {
@@ -138,15 +124,9 @@ class _EditWorkshopState extends State<EditWorkshop> {
                     DateTimeField(
                       onChanged: (value) {
                         setState(() {
-                          // String endTime = DateFormat.Hm().format(value!);
-                          // endTimeController.text = endTime;
                           endTimeController.text = value.toString();
-                          // endTimeController =
-                          //     TextEditingController(text: widget.end_time);
                         });
                       },
-                      // controller: endTimeController =
-                      //     TextEditingController(text: widget.end_time),
                       initialValue: eventEndTime,
                       format: DateFormat.Hm(),
                       onShowPicker: (context, currentValue) async {
@@ -171,22 +151,17 @@ class _EditWorkshopState extends State<EditWorkshop> {
                           try {
                             workshop.doc(widget.id).update({
                               'notes': notesController.text,
-                              'date': dateController.text,
-                              'start_time': startTimeController.text,
-                              'end_time': endTimeController.text,
+                              'location': locationController.text,
+                              'date': (dateController.text == '')
+                                  ? widget.date.toString()
+                                  : dateController.text,
+                              'start_time': (startTimeController.text == '')
+                                  ? widget.start_time.toString()
+                                  : startTimeController.text,
+                              'end_time': (endTimeController.text == '')
+                                  ? widget.end_time
+                                  : endTimeController.text,
                             });
-
-                            // workshop.doc(id).update({
-                            //   'notes': notesController.text,
-                            //   'date': dateController.text,
-                            //   'start_time': startTimeController.text,
-                            //   'end_time': endTimeController.text,
-                            // });
-
-                            notesController.text = '';
-                            dateController.text = '';
-                            startTimeController.text = '';
-                            endTimeController.text = '';
 
                             Navigator.pop(context);
                           } catch (e) {
@@ -206,15 +181,15 @@ class _EditWorkshopState extends State<EditWorkshop> {
                                     ));
                           }
                         },
-                        child: const Text("ADD WORKSHOP")),
-                    SizedBox(
-                      child: ElevatedButton(
-                        child: Text(notesController.text),
-                        onPressed: () {
-                          print(widget.date);
-                        },
-                      ),
-                    )
+                        child: const Text("UPDATE")),
+                    // SizedBox(
+                    //   child: ElevatedButton(
+                    //     child: Text(notesController.text),
+                    //     onPressed: () {
+                    //       print(dateController.text == '');
+                    //     },
+                    //   ),
+                    // )
                   ],
                 ),
               ),
