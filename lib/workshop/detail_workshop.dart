@@ -117,14 +117,14 @@ class _DetailWorkshopState extends State<DetailWorkshop> {
                         'workshop_id': widget.id,
                         'workshop_name': widget.notes!,
                         'created_at': DateTime.now().toString(),
-                        'presence': true,
+                        'presence': false,
                       });
                       // print(widget.user.displayName);
                       showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                                 title: const Text('Insert Result'),
-                                content: const Text("Presence Succes"),
+                                content: const Text("Success"),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () =>
@@ -139,7 +139,7 @@ class _DetailWorkshopState extends State<DetailWorkshop> {
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                                 title: const Text('Insert Result'),
-                                content: const Text("Failed to Presence"),
+                                content: const Text("Failed to Enroll"),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () =>
@@ -150,7 +150,7 @@ class _DetailWorkshopState extends State<DetailWorkshop> {
                               ));
                     }
                   },
-                  child: const Text("Attend")),
+                  child: const Text("Enroll")),
             )
           ],
         ),
